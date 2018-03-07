@@ -1,0 +1,3 @@
+[submodule "RGB-Stripedisplay"]
+	path = RGB-Stripedisplay
+	url = git@github.com:CaDS-Studentprojects/RGB-Stripedisplay.git

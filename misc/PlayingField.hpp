@@ -11,6 +11,7 @@
 #include <stdint.h>
 #include <vector>
 #include <string>
+#include "Pixel.hpp"
 
 using namespace std;
 
@@ -18,14 +19,14 @@ namespace gamectrl {
 
 class PlayingField {
 public:
-	PlayingField(uint32_t const width, uint32_t const height);
+	PlayingField(uint32_t const numColumns, uint32_t const numRows);
 	virtual ~PlayingField();
 
-	uint32_t const kWidth;
-	uint32_t const kHeight;
+	uint32_t const kNumColumns;
+	uint32_t const kNumRows;
 
 	void setField(vector<vector<uint32_t>> & field);
-	void updateField(uint32_t const column_index, uint32_t const row_index, uint32_t value);
+	void updateField(Pixel const pixel, uint32_t value);
 
 	vector<vector<uint32_t>> getField() const;
 	string toString() const;

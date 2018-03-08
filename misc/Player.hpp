@@ -13,6 +13,7 @@
 
 #include "../input/Input.hpp"
 #include "Color.hpp"
+#include "Pixel.hpp"
 
 using namespace std;
 
@@ -20,21 +21,21 @@ namespace gamectrl {
 
 class Player {
 public:
-	Player(uint32_t const id, tuple<uint32_t, uint32_t> const position, Input action, Color color);
+	Player(uint32_t const id, Pixel const position, Input action, Color color);
 	virtual ~Player();
 
-	void update(tuple<uint32_t, uint32_t> const & pos, Input action);
+	void update(Pixel const & pos, Input action);
 	void setCurrentAction(Input action);
 
 	Input getCurrentAction() const;
 	Input getLastInput() const;
-	vector<tuple<uint32_t, uint32_t>> const getPositions() const;
+	vector<Pixel> const getPositions() const;
 
 	uint32_t const kId;
 	Color const kColor;
 private:
 	Input last_input;
-	vector<tuple<uint32_t, uint32_t>> positions;
+	vector<Pixel> positions;
 };
 
 } /* namespace gamectrl */

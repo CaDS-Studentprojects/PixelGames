@@ -7,10 +7,10 @@
 
 #include "LedOutputHandler.hpp"
 
-LedOutputHandler::LedOutputHandler(shared_ptr<Channel> channel, uint32_t display_width, uint32_t display_height)
+LedOutputHandler::LedOutputHandler(shared_ptr<Channel> channel, uint32_t rows, uint32_t columns)
 	: stub(WS2801_Display::NewStub(channel))
-	, display_width{display_width}
-	, display_height{display_height}
+	, kNumRows{rows}
+	, kNumColums{columns}
 {}
 
 LedOutputHandler::~LedOutputHandler()
@@ -18,17 +18,17 @@ LedOutputHandler::~LedOutputHandler()
 
 void LedOutputHandler::operator<<(vector<vector<uint32_t>> const & vect)
 {
-	if(! IOutputHandler::checkDimensions(vect, display_height, display_width)){
+	if(! IOutputHandler::checkDimensions(vect, kNumRows, kNumColums)){
 		throw length_error("2D-Vector dimensions are invalid. Should be "
-				+ to_string(display_height) + "x"
-				+ to_string(display_width) + ".");
+				+ to_string(kNumRows) + "rows and "
+				+ to_string(kNumColums) + "columns.");
 	}
 
 	DISPLAY_MSG request;
 	request.set_version(1);
 	request.set_typ(1);
-	request.set_dim_x(display_width);
-	request.set_dim_y(display_height);
+	request.set_dim_x(kNumColums);
+	request.set_dim_y(kNumRows);
 	request.set_pixel_list(vectToString(vect));
 
 	DISPLAY_RESPONSE response;
@@ -49,19 +49,19 @@ void LedOutputHandler::operator<<(vector<vector<uint32_t>> const & vect)
 string LedOutputHandler::vectToString(vector<vector<uint32_t>> const & vect)
 {
 	string s;
-		int pixelIdx = 0;
-		int lastPixel = display_width * display_height - 1;
+	int pixelIdx = 0;
+	int lastPixel = kNumRows * kNumColums - 1;
 
-		for(auto row: vect){
-			for(auto pixel: row){
-				if(pixelIdx == lastPixel){
-					s += to_string(pixel);
-				}else{
-					s += to_string(pixel) + ", ";
-					pixelIdx++;
-				}
+	for(uint32_t x = 0; x < kNumColums; x++){
+		for(uint32_t y = 0; y < kNumRows; y++){
+			if(pixelIdx == lastPixel){
+				s += to_string(vect.at(y).at(x));
+			}else{
+				s += to_string(vect.at(y).at(x)) + ", ";
+				pixelIdx++;
 			}
 		}
-		return s;
+	}
+	return s;
 }
 

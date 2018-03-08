@@ -26,7 +26,7 @@ TronGameController::~TronGameController() {
 void TronGameController::initGame(){
 	for(auto player : players){
 		auto player_position = player.getPositions().at(0);
-		playing_field.updateField(get<0>(player_position), get<1>(player_position), player.kColor.getIntValue());
+		playing_field.updateField(player.getPositions().at(0), player.kColor.getIntValue());
 	}
 }
 
@@ -47,28 +47,28 @@ bool TronGameController::processInput(Player const & player, Input const input)
 	while(!inputProcessed){
 		if(cur_action == Input::UP){
 			if(last_player_action != Input::DOWN){
-				get<1>(new_head) -= 1;
+				new_head.setRow(new_head.getRow() - 1);
 				inputProcessed = true;
 			}else{
 				cur_action = Input::DOWN;
 			}
 		}else if(cur_action == Input::DOWN){
 			if(last_player_action != Input::UP){
-				get<1>(new_head) += 1;
+				new_head.setRow(new_head.getRow() + 1);
 				inputProcessed = true;
 			}else{
 				cur_action = Input::UP;
 			}
 		}else if(cur_action == Input::RIGHT){
 			if(last_player_action != Input::LEFT){
-				get<0>(new_head) += 1;
+				new_head.setColumn(new_head.getColumn() + 1);
 				inputProcessed = true;
 			}else{
 				cur_action = Input::LEFT;
 			}
 		}else if(cur_action == Input::LEFT){
 			if(last_player_action != Input::RIGHT){
-				get<0>(new_head) -= 1;
+				new_head.setColumn(new_head.getColumn() - 1);
 				inputProcessed = true;
 			}else{
 				cur_action = Input::RIGHT;
@@ -76,24 +76,24 @@ bool TronGameController::processInput(Player const & player, Input const input)
 		}
 	}
 
-	cout << "column: " << to_string(get<0>(new_head)) << ", row: " << to_string(get<1>(new_head)) << endl;
+	cout << "row: " << to_string(new_head.getRow()) << ", column: " << to_string(new_head.getColumn()) << endl;
 
-	if(get<0>(new_head) >= playing_field.kWidth
-		|| get<1>(new_head) >= playing_field.kHeight
+	if(new_head.getRow() >= playing_field.kNumRows
+		|| new_head.getColumn() >= playing_field.kNumColumns
 	){
 		// game lost, because player hit wall
 		return false;
 	}else{
 		players.at(player_id-1).update(new_head, cur_action);
 
-		auto pixel_value = playing_field.getField().at(get<0>(new_head)).at(get<1>(new_head));
+		auto pixel_value = playing_field.getField().at(new_head.getRow()).at(new_head.getColumn());
 
 		if(pixel_value > 0){
 			// game lost, because player hit other player
 			return false;
 		}
 
-		playing_field.updateField(get<0>(new_head), get<1>(new_head), player.kColor.getIntValue());
+		playing_field.updateField(new_head, player.kColor.getIntValue());
 
 		return true;
 	}

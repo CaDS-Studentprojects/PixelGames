@@ -20,13 +20,13 @@ class IOutputHandler
 		virtual void operator<<(vector<vector<uint32_t>> const & vect) = 0;
 
 		template <typename T>
-		static bool checkDimensions(vector<vector<T>> const & vect, uint32_t display_height, uint32_t display_width)
+		static bool checkDimensions(vector<vector<T>> const & vect, uint32_t numRows, uint32_t numColumns)
 		{
 			bool correctDimensions = true;
-			if(vect.size() != display_height){ correctDimensions = false; }
+			if(vect.size() != numRows){ correctDimensions = false; }
 
 			for(auto row : vect){
-				if (row.size() != display_width){
+				if (row.size() != numColumns){
 					correctDimensions = false;
 				}
 			}

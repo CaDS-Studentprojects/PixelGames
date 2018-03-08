@@ -25,7 +25,7 @@ using LED_display::WS2801_Display;
 
 class LedOutputHandler: public IOutputHandler {
 public:
-	LedOutputHandler(shared_ptr<Channel> channel, uint32_t display_width, uint32_t display_height);
+	LedOutputHandler(shared_ptr<Channel> channel, uint32_t rows, uint32_t columns);
 	virtual ~LedOutputHandler();
 
 	void operator<<(vector<vector<uint32_t>> const & vect) override;
@@ -33,8 +33,8 @@ public:
 	string vectToString(vector<vector<uint32_t>> const & vect);
 private:
 	unique_ptr<WS2801_Display::Stub> stub;
-	uint32_t display_width;
-	uint32_t display_height;
+	uint32_t const kNumRows;
+	uint32_t const kNumColums;
 };
 
 #endif /* SRC_OUTPUT_LEDOUTPUTHANDLER_HPP_ */

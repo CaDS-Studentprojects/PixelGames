@@ -12,6 +12,7 @@ using namespace std;
 FileOutputHandler::FileOutputHandler(string output_file)
 {
 	ofile.open(output_file);
+	ofile << "New Game starts" << endl;
 }
 
 FileOutputHandler::~FileOutputHandler() {
@@ -20,7 +21,7 @@ FileOutputHandler::~FileOutputHandler() {
 
 void FileOutputHandler::operator<<(vector<vector<uint32_t>> const & vect)
 {
-	ofile << FileOutputHandler::vectToString(vect);
+	ofile << FileOutputHandler::vectToString(vect) << endl;
 }
 
 string FileOutputHandler::vectToString(vector<vector<uint32_t>> const & vect)
@@ -28,7 +29,7 @@ string FileOutputHandler::vectToString(vector<vector<uint32_t>> const & vect)
 	string s;
 	for(auto row: vect){
 		for(auto pixel: row){
-			s += to_string(pixel) + " ";
+			s += to_string(pixel > 0 ? 1 : 0) + " ";
 		}
 		s = s + "\n";
 	}

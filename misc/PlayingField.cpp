@@ -9,10 +9,10 @@
 
 namespace gamectrl {
 
-PlayingField::PlayingField(uint32_t const width, uint32_t const height)
-	: kWidth{width}
-	, kHeight{height}
-	, field(height, vector<uint32_t>(width, 0))
+PlayingField::PlayingField(uint32_t const numColumns, uint32_t const numRows)
+	: kNumColumns{numColumns}
+	, kNumRows{numRows}
+	, field(numRows, vector<uint32_t>(numColumns, 0))
 {
 }
 
@@ -22,8 +22,8 @@ void PlayingField::setField(vector<vector<uint32_t>> & field){
 
 }
 
-void PlayingField::updateField(uint32_t const row_index, uint32_t const column_index, uint32_t value){
-	field.at(row_index).at(column_index) = value;
+void PlayingField::updateField(Pixel const pixel, uint32_t value){
+	field.at(pixel.getRow()).at(pixel.getColumn()) = value;
 }
 
 vector<vector<uint32_t>> PlayingField::getField() const {
@@ -44,7 +44,7 @@ string PlayingField::toString() const {
 string PlayingField::arrayFormattedString() const {
 	string s;
 	int pixelIdx = 0;
-	int lastPixel = kWidth * kHeight - 1;
+	int lastPixel = kNumRows * kNumColumns - 1;
 
 	for(auto row: field){
 		for(auto pixel: row){

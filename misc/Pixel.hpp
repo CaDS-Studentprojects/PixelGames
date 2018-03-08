@@ -15,24 +15,24 @@ using namespace std;
 
 class Pixel {
 public:
-	Pixel(uint32_t row, uint32_t column)
-		: pixel_position(row, column){};
+	Pixel(uint32_t column_idx, uint32_t row_idx)
+		: pixel_position(column_idx, row_idx){};
 
 	virtual ~Pixel(){};
 
-	uint32_t getRow() const {
+	uint32_t getColumn() const {
 		return get<0>(pixel_position);
 	}
 
-	uint32_t getColumn() const {
+	uint32_t getRow() const {
 		return get<1>(pixel_position);
 	}
 
-	void setRow(uint32_t val) {
+	void setColumn(uint32_t val) {
 		get<0>(pixel_position) = val;
 	}
 
-	void setColumn(uint32_t val) {
+	void setRow(uint32_t val) {
 		get<1>(pixel_position) = val;
 	}
 

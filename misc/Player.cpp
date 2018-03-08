@@ -9,7 +9,7 @@
 
 namespace gamectrl {
 
-Player::Player(uint32_t const id, tuple<uint32_t,  uint32_t> const position, Input action, Color color)
+Player::Player(uint32_t const id, Pixel const position, Input action, Color color)
 	: kId{id}
 	, kColor{color}
 	, last_input{action}
@@ -20,7 +20,7 @@ Player::Player(uint32_t const id, tuple<uint32_t,  uint32_t> const position, Inp
 Player::~Player() {}
 
 
-void Player::update(tuple<uint32_t, uint32_t> const & pos, Input action)
+void Player::update(Pixel const & pos, Input action)
 {
 	positions.push_back(pos);
 	last_input = action;
@@ -32,7 +32,7 @@ Input Player::getLastInput() const
 }
 
 
-vector<tuple<uint32_t, uint32_t>> const Player::getPositions() const
+vector<Pixel> const Player::getPositions() const
 {
 	return positions;
 }

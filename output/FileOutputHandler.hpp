@@ -14,16 +14,22 @@
 
 using namespace std;
 
-class FileOutputHandler: public IOutputHandler {
-public:
-	FileOutputHandler(string output_file);
-	~FileOutputHandler();
-	void operator<<(vector<vector<uint32_t>> const & vect) override;
+namespace pixelgames {
+namespace output {
 
-	static string vectToString(vector<vector<uint32_t>> const & vect);
-private:
-	ofstream ofile;
+class FileOutputHandler: public IOutputHandler {
+  public:
+    FileOutputHandler(string output_file);
+    ~FileOutputHandler();
+    void operator<<(vector<vector<uint32_t>> const & vect) override;
+
+    static string vectToString(vector<vector<uint32_t>> const & vect);
+  private:
+    ofstream ofile;
 
 };
+
+} /* namespace output */
+} /* namespace pixelgames */
 
 #endif /* FILEOUTPUTHANDLER_HPP_ */

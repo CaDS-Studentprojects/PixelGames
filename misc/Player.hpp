@@ -16,28 +16,35 @@
 #include "Pixel.hpp"
 
 using namespace std;
+using namespace pixelgames::input;
 
-namespace gamectrl {
+namespace pixelgames {
+namespace misc {
 
 class Player {
-public:
-	Player(uint32_t const id, Pixel const position, Input action, Color color);
-	virtual ~Player();
+  public:
+    Player(uint32_t const id, Pixel const position, Input action, Color color);
 
-	void update(Pixel const & pos, Input action);
-	void setCurrentAction(Input action);
+    virtual ~Player();
 
-	Input getCurrentAction() const;
-	Input getLastInput() const;
-	vector<Pixel> const getPositions() const;
+    void update(Pixel const & pos, Input action);
 
-	uint32_t const kId;
-	Color const kColor;
-private:
-	Input last_input;
-	vector<Pixel> positions;
+    void setCurrentAction(Input action);
+
+    Input getCurrentAction() const;
+
+    Input getLastInput() const;
+
+    vector<Pixel> const getPositions() const;
+
+    uint32_t const kId;
+    Color const kColor;
+  private:
+    Input last_input;
+    vector<Pixel> positions;
 };
 
-} /* namespace gamectrl */
+} /* namespace misc */
+} /* namespace pixelgames */
 
 #endif /* PLAYER_HPP_ */

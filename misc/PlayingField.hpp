@@ -15,27 +15,33 @@
 
 using namespace std;
 
-namespace gamectrl {
+namespace pixelgames {
+namespace misc {
 
 class PlayingField {
-public:
-	PlayingField(uint32_t const numColumns, uint32_t const numRows);
-	virtual ~PlayingField();
+  public:
+    PlayingField(uint32_t const numColumns, uint32_t const numRows);
 
-	uint32_t const kNumColumns;
-	uint32_t const kNumRows;
+    virtual ~PlayingField();
 
-	void setField(vector<vector<uint32_t>> & field);
-	void updateField(Pixel const pixel, uint32_t value);
+    void setField(vector<vector<uint32_t>> & field);
 
-	vector<vector<uint32_t>> getField() const;
-	string toString() const;
-	string arrayFormattedString() const;
+    void updateField(Pixel const pixel, uint32_t value);
 
-private:
-	vector<vector<uint32_t>> field;
+    vector<vector<uint32_t>> getField() const;
+
+    string toString() const;
+
+    string arrayFormattedString() const;
+
+    uint32_t const kNumColumns;
+    uint32_t const kNumRows;
+
+  private:
+    vector<vector<uint32_t>> field;
 };
 
-} /* namespace gamectrl */
+} /* namespace misc */
+} /* namespace pixelgames */
 
 #endif /* PLAYINGFIELD_HPP_ */

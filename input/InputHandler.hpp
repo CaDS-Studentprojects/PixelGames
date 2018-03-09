@@ -18,55 +18,53 @@
 
 using namespace std;
 
-namespace gamectrl {
+namespace pixelgames {
+namespace input {
 
 class InputHandler {
-public:
-	InputHandler(atomic<Input> & player_input)
-		: player_input{player_input}
-		, the_thread()
-	{}
-
-    ~InputHandler(){
-         isRunning = false;
-         if(the_thread.joinable()) the_thread.join();
-	}
-
-    void start(){
-    	isRunning = true;
-    	the_thread = std::thread(&InputHandler::ThreadMain,this);
+  public:
+    InputHandler(atomic<Input> & player_input)
+        : player_input { player_input }, the_thread() {
     }
 
-private:
+    ~InputHandler() {
+      isRunning = false;
+      if (the_thread.joinable()) the_thread.join();
+    }
+
+    void start() {
+      isRunning = true;
+      the_thread = std::thread(&InputHandler::ThreadMain, this);
+    }
+
+  private:
     atomic<Input>& player_input;
     thread the_thread;
     bool isRunning = false;
 
-    void ThreadMain(){
-//    	initscr();
-//    	printw("Hi!\n");
-//    	refresh();
+    void ThreadMain() {
+      //    	initscr();
+      //    	printw("Hi!\n");
+      //    	refresh();
 
-        while(isRunning){
+      while (isRunning) {
 
-            char c; // = getchar();
-            cin >> c;
+        char c; // = getchar();
+        cin >> c;
 
-            Input action = c == 'w' ? Input::UP
-            		: c == 's' ? Input::DOWN
-            		: c == 'a' ? Input::LEFT
-            		: c == 'd' ? Input::RIGHT
-            		: Input::QUIT;
+        Input action = c == 'w' ? Input::UP : c == 's' ? Input::DOWN : c == 'a' ? Input::LEFT :
+                       c == 'd' ? Input::RIGHT : Input::QUIT;
 
-            player_input.store(action);
+        player_input.store(action);
 
-        	// Do something useful, e.g:
-            //std::this_thread::sleep_for( std::chrono::seconds(1) );
-        }
-        cout << "Bye!" << endl;
+        // Do something useful, e.g:
+        //std::this_thread::sleep_for( std::chrono::seconds(1) );
+      }
+      cout << "Bye!" << endl;
     }
 };
 
-} /* namespace gamectrl */
+} /* namespace input */
+} /* namespace pixelgames */
 
 #endif /* INPUTHANDLER_HPP_ */

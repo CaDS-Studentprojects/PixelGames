@@ -7,34 +7,29 @@
 
 #include "Player.hpp"
 
-namespace gamectrl {
+namespace pixelgames {
+namespace misc {
 
 Player::Player(uint32_t const id, Pixel const position, Input action, Color color)
-	: kId{id}
-	, kColor{color}
-	, last_input{action}
-{
-	positions.push_back(position);
+    : kId { id }, kColor { color }, last_input { action } {
+  positions.push_back(position);
 }
 
-Player::~Player() {}
-
-
-void Player::update(Pixel const & pos, Input action)
-{
-	positions.push_back(pos);
-	last_input = action;
+Player::~Player() {
 }
 
-Input Player::getLastInput() const
-{
-	return last_input;
+void Player::update(Pixel const & pos, Input action) {
+  positions.push_back(pos);
+  last_input = action;
 }
 
-
-vector<Pixel> const Player::getPositions() const
-{
-	return positions;
+Input Player::getLastInput() const {
+  return last_input;
 }
 
-} /* namespace gamectrl */
+vector<Pixel> const Player::getPositions() const {
+  return positions;
+}
+
+} /* namespace misc */
+} /* namespace pixelgames */

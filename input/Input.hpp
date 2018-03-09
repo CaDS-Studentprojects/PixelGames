@@ -8,6 +8,16 @@
 #ifndef INPUT_HPP_
 #define INPUT_HPP_
 
-enum class Input : int {QUIT, UP, RIGHT, DOWN, LEFT};
+#include <stdint.h>
+
+namespace pixelgames {
+namespace input {
+
+enum class Input
+  : uint32_t {QUIT, UP, RIGHT, DOWN, LEFT
+};
+
+} /* namespace input */
+} /* namespace pixelgames */
 
 #endif /* INPUT_HPP_ */

@@ -12,16 +12,22 @@
 #include "../input/Input.hpp"
 #include "../misc/Player.hpp"
 
-namespace gamectrl {
+using namespace pixelgames::misc;
+
+namespace pixelgames {
+namespace controller {
 
 class IGameController {
-public:
-	virtual ~IGameController(){};
+  public:
+    virtual ~IGameController() {
+    }
+    ;
 
-	virtual void initGame() = 0;
-	virtual bool processInput(Player const & player, Input const input) = 0;
+    virtual void initGame() = 0;
+    virtual bool processInput(Player const & player, Input const input) = 0;
 };
 
-} /* namespace gamectrl */
+} /* namespace controller */
+} /* namespace pixelgames */
 
 #endif /* SRC_CONTROLLER_IGAMECONTROLLER_HPP_ */

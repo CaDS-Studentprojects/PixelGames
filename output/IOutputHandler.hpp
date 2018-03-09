@@ -13,26 +13,34 @@
 
 using namespace std;
 
-class IOutputHandler
-{
-	public:
-		virtual ~IOutputHandler(){};
-		virtual void operator<<(vector<vector<uint32_t>> const & vect) = 0;
+namespace pixelgames {
+namespace output {
 
-		template <typename T>
-		static bool checkDimensions(vector<vector<T>> const & vect, uint32_t numRows, uint32_t numColumns)
-		{
-			bool correctDimensions = true;
-			if(vect.size() != numRows){ correctDimensions = false; }
+class IOutputHandler {
+  public:
+    virtual ~IOutputHandler() {
+    }
+    ;
+    virtual void operator<<(vector<vector<uint32_t>> const & vect) = 0;
 
-			for(auto row : vect){
-				if (row.size() != numColumns){
-					correctDimensions = false;
-				}
-			}
+    template<typename T>
+    static bool checkDimensions(vector<vector<T>> const & vect, uint32_t numRows, uint32_t numColumns) {
+      bool correctDimensions = true;
+      if (vect.size() != numRows) {
+        correctDimensions = false;
+      }
 
-			return correctDimensions;
-		}
+      for (auto row : vect) {
+        if (row.size() != numColumns) {
+          correctDimensions = false;
+        }
+      }
+
+      return correctDimensions;
+    }
 };
+
+} /* namespace output */
+} /* namespace pixelgames */
 
 #endif /* IOUTPUTHANDLER_HPP_ */

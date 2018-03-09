@@ -23,18 +23,24 @@ using LED_display::DISPLAY_MSG;
 using LED_display::DISPLAY_RESPONSE;
 using LED_display::WS2801_Display;
 
+namespace pixelgames {
+namespace output {
+
 class LedOutputHandler: public IOutputHandler {
-public:
-	LedOutputHandler(shared_ptr<Channel> channel, uint32_t rows, uint32_t columns);
-	virtual ~LedOutputHandler();
+  public:
+    LedOutputHandler(shared_ptr<Channel> channel, uint32_t rows, uint32_t columns);
+    virtual ~LedOutputHandler();
 
-	void operator<<(vector<vector<uint32_t>> const & vect) override;
+    void operator<<(vector<vector<uint32_t>> const & vect) override;
 
-	string vectToString(vector<vector<uint32_t>> const & vect);
-private:
-	unique_ptr<WS2801_Display::Stub> stub;
-	uint32_t const kNumRows;
-	uint32_t const kNumColums;
+    string vectToString(vector<vector<uint32_t>> const & vect);
+  private:
+    unique_ptr<WS2801_Display::Stub> stub;
+    uint32_t const kNumRows;
+    uint32_t const kNumColums;
 };
+
+} /* namespace output */
+} /* namespace pixelgames */
 
 #endif /* SRC_OUTPUT_LEDOUTPUTHANDLER_HPP_ */

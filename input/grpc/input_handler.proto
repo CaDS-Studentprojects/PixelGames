@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package pixelgames.inputhandler;
+
+service InputHandler {
+    rpc call (InputRequest) returns (InputReply) {}
+}
+
+message InputRequest {
+    uint8 version = 1;
+    uint32 player_id = 2;
+    uint32 input_key = 3;
+}
+
+message InputReply {
+    bool success = 1;
+}

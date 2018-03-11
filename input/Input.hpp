@@ -14,7 +14,7 @@ namespace pixelgames {
 namespace input {
 
 enum class Input
-  : uint32_t {QUIT, UP, RIGHT, DOWN, LEFT
+  : uint32_t {UP, RIGHT, DOWN, LEFT, COUNT
 };
 
 } /* namespace input */

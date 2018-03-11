@@ -31,17 +31,23 @@ class Player {
 
     void setCurrentAction(Input action);
 
+    uint32_t getId() const;
+
+    Color getColor() const;
+
     Input getCurrentAction() const;
 
     Input getLastInput() const;
 
     vector<Pixel> const getPositions() const;
 
-    uint32_t const kId;
-    Color const kColor;
+    string toString() const;
+
   private:
-    Input last_input;
-    vector<Pixel> positions;
+    uint32_t id_;
+    Color color_;
+    Input last_input_;
+    vector<Pixel> positions_;
 };
 
 } /* namespace misc */

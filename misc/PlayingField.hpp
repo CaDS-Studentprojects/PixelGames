@@ -32,13 +32,13 @@ class PlayingField {
 
     string toString() const;
 
-    string arrayFormattedString() const;
+    string prettyPrint() const;
 
     uint32_t const kNumColumns;
     uint32_t const kNumRows;
 
   private:
-    vector<vector<uint32_t>> field;
+    vector<vector<uint32_t>> field_;
 };
 
 } /* namespace misc */

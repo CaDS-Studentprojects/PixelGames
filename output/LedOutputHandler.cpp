@@ -11,31 +11,31 @@ namespace pixelgames {
 namespace output {
 
 LedOutputHandler::LedOutputHandler(shared_ptr<Channel> channel, uint32_t rows, uint32_t columns)
-    : stub(WS2801_Display::NewStub(channel)), kNumRows { rows }, kNumColums { columns } {
+    : stub_(WS2801_Display::NewStub(channel)), numRows_ { rows }, numColums_ { columns } {
 }
 
 LedOutputHandler::~LedOutputHandler() {
 }
 
 void LedOutputHandler::operator<<(vector<vector<uint32_t>> const & vect) {
-  if (!IOutputHandler::checkDimensions(vect, kNumRows, kNumColums)) {
+  if (!IOutputHandler::checkDimensions(vect, numRows_, numColums_)) {
     throw length_error(
-        "2D-Vector dimensions are invalid. Should be " + to_string(kNumRows) + "rows and " + to_string(kNumColums)
+        "2D-Vector dimensions are invalid. Should be " + to_string(numRows_) + "rows and " + to_string(numColums_)
             + "columns.");
   }
 
   DISPLAY_MSG request;
   request.set_version(1);
   request.set_typ(1);
-  request.set_dim_x(kNumColums);
-  request.set_dim_y(kNumRows);
+  request.set_dim_x(numColums_);
+  request.set_dim_y(numRows_);
   request.set_pixel_list(vectToString(vect));
 
   DISPLAY_RESPONSE response;
 
   ClientContext context;
 
-  Status status = stub->DISPLAY_CHANGE(&context, request, &response);
+  Status status = stub_->DISPLAY_CHANGE(&context, request, &response);
 
   // Act upon its status.
   if (status.ok()) {
@@ -48,10 +48,10 @@ void LedOutputHandler::operator<<(vector<vector<uint32_t>> const & vect) {
 string LedOutputHandler::vectToString(vector<vector<uint32_t>> const & vect) {
   string s;
   int pixelIdx = 0;
-  int lastPixel = kNumRows * kNumColums - 1;
+  int lastPixel = numRows_ * numColums_ - 1;
 
-  for (uint32_t x = 0; x < kNumColums; x++) {
-    for (uint32_t y = 0; y < kNumRows; y++) {
+  for (uint32_t x = 0; x < numColums_; x++) {
+    for (uint32_t y = 0; y < numRows_; y++) {
       if (pixelIdx == lastPixel) {
         s += to_string(vect.at(y).at(x));
       } else {

@@ -3,7 +3,8 @@ syntax = "proto3";
 package pixelgames.inputhandler;
 
 service InputHandler {
-    rpc call (InputRequest) returns (InputReply) {}
+    rpc input (InputRequest) returns (InputReply) {}
+    rpc registration (RegisterPlayerRequest) returns (RegisterPlayerReply) {}
 }
 
 message InputRequest {
@@ -14,4 +15,13 @@ message InputRequest {
 
 message InputReply {
     bool success = 1;
+}
+
+message RegisterPlayerRequest {
+    uint8 version = 1;
+    string game = 2;
+}
+
+message RegisterPlayerReply {
+    uint32 player_id = 3;
 }

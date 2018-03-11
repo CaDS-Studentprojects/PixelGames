@@ -25,7 +25,7 @@ class FileOutputHandler: public IOutputHandler {
 
     static string vectToString(vector<vector<uint32_t>> const & vect);
   private:
-    ofstream ofile;
+    ofstream ofile_;
 
 };
 

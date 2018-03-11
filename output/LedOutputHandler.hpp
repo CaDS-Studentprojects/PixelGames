@@ -34,10 +34,11 @@ class LedOutputHandler: public IOutputHandler {
     void operator<<(vector<vector<uint32_t>> const & vect) override;
 
     string vectToString(vector<vector<uint32_t>> const & vect);
+
   private:
-    unique_ptr<WS2801_Display::Stub> stub;
-    uint32_t const kNumRows;
-    uint32_t const kNumColums;
+    unique_ptr<WS2801_Display::Stub> stub_;
+    uint32_t numRows_;
+    uint32_t numColums_;
 };
 
 } /* namespace output */

@@ -13,18 +13,18 @@ namespace pixelgames {
 namespace output {
 
 FileOutputHandler::FileOutputHandler(string output_file) {
-  ofile.open(output_file);
-  if (!ofile) throw runtime_error { "Could not open" + output_file };
+  ofile_.open(output_file);
+  if (!ofile_) throw runtime_error { "Could not open" + output_file };
 
-  ofile << "New Game starts" << endl;
+  ofile_ << "New Game starts" << endl;
 }
 
 FileOutputHandler::~FileOutputHandler() {
-  ofile.close();
+  ofile_.close();
 }
 
 void FileOutputHandler::operator<<(vector<vector<uint32_t>> const & vect) {
-  ofile << FileOutputHandler::vectToString(vect) << endl;
+  ofile_ << FileOutputHandler::vectToString(vect) << endl;
 }
 
 string FileOutputHandler::vectToString(vector<vector<uint32_t>> const & vect) {

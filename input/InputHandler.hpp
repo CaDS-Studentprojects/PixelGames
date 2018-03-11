@@ -24,38 +24,42 @@ namespace input {
 class InputHandler {
   public:
     InputHandler(atomic<Input> & player_input)
-        : player_input { player_input }, the_thread() {
+        : player_input_ { player_input }, the_thread_() {
     }
 
     ~InputHandler() {
-      isRunning = false;
-      if (the_thread.joinable()) the_thread.join();
+      isRunning_ = false;
+      if (the_thread_.joinable()) the_thread_.join();
     }
 
     void start() {
-      isRunning = true;
-      the_thread = std::thread(&InputHandler::ThreadMain, this);
+      isRunning_ = true;
+      the_thread_ = std::thread(&InputHandler::ThreadMain, this);
     }
 
   private:
-    atomic<Input>& player_input;
-    thread the_thread;
-    bool isRunning = false;
+    atomic<Input>& player_input_;
+    thread the_thread_;
+    bool isRunning_ = false;
 
     void ThreadMain() {
       //    	initscr();
       //    	printw("Hi!\n");
       //    	refresh();
 
-      while (isRunning) {
+      while (isRunning_) {
 
         char c; // = getchar();
         cin >> c;
 
         Input action = c == 'w' ? Input::UP : c == 's' ? Input::DOWN : c == 'a' ? Input::LEFT :
-                       c == 'd' ? Input::RIGHT : Input::QUIT;
+                       c == 'd' ? Input::RIGHT : Input::COUNT;
 
-        player_input.store(action);
+        if(action == Input::COUNT){
+          isRunning_ = false;
+        }
+
+        player_input_.store(action);
 
         // Do something useful, e.g:
         //std::this_thread::sleep_for( std::chrono::seconds(1) );

@@ -11,31 +11,27 @@ namespace pixelgames {
 namespace controller {
 
 TronGameController::TronGameController(PlayingField & player_field, vector<Player> & players)
-    : playing_field { player_field }, players { players } {
+    : playing_field_ { player_field }, players_ { players } {
 }
 
 TronGameController::~TronGameController() {
 }
 
 void TronGameController::initGame() {
-  for (auto player : players) {
+  for (auto player : players_) {
     auto player_position = player.getPositions().at(0);
-    playing_field.updateField(player.getPositions().at(0), player.kColor.getIntValue());
+    playing_field_.updateField(player.getPositions().at(0), player.getColor().rbgToInt());
   }
 }
 
 bool TronGameController::processInput(Player const & player, Input const input) {
   auto cur_action = input;
-  auto player_id = player.kId;
+  auto player_id = player.getId();
   auto last_player_action = player.getLastInput();
   auto player_positions = player.getPositions();
   auto head = player_positions.at(player_positions.size() - 1);
   auto new_head = head;
   bool inputProcessed = false;
-
-  if (cur_action == Input::QUIT) {
-    return false;
-  }
 
   while (!inputProcessed) {
     if (cur_action == Input::UP) {
@@ -71,20 +67,20 @@ bool TronGameController::processInput(Player const & player, Input const input) 
 
   cout << "row: " << to_string(new_head.getRow()) << ", column: " << to_string(new_head.getColumn()) << endl;
 
-  if (new_head.getRow() >= playing_field.kNumRows || new_head.getColumn() >= playing_field.kNumColumns) {
+  if (new_head.getRow() >= playing_field_.kNumRows || new_head.getColumn() >= playing_field_.kNumColumns) {
     // game lost, because player hit wall
     return false;
   } else {
-    players.at(player_id - 1).update(new_head, cur_action);
+    players_.at(player_id - 1).update(new_head, cur_action);
 
-    auto pixel_value = playing_field.getField().at(new_head.getRow()).at(new_head.getColumn());
+    auto pixel_value = playing_field_.getField().at(new_head.getRow()).at(new_head.getColumn());
 
     if (pixel_value > 0) {
       // game lost, because player hit other player
       return false;
     }
 
-    playing_field.updateField(new_head, player.kColor.getIntValue());
+    playing_field_.updateField(new_head, player.getColor().rbgToInt());
 
     return true;
   }

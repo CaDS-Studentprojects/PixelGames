@@ -9,26 +9,37 @@
 #define COLOR_HPP_
 
 #include <stdint.h>
+#include <string>
+
+using namespace std;
 
 namespace pixelgames {
 namespace misc {
 
 class Color {
   public:
-    Color(uint8_t const red, uint8_t const green, uint8_t const blue)
-        : kRed { red }, kGreen { green }, kBlue { blue } {
-    }
+    Color(uint8_t const red, uint8_t const green, uint8_t const blue);
 
-    virtual ~Color() {
-    }
+    virtual ~Color();
 
-    int getIntValue() const {
-      return (kRed << 16 | kBlue << 8 | kGreen);
-    }
+    int rbgToInt() const;
 
-    uint8_t const kRed;
-    uint8_t const kGreen;
-    uint8_t const kBlue;
+    string toString() const;
+
+    /* Predefined Colors */
+    static Color const black;
+    static Color const red;
+    static Color const green;
+    static Color const blue;
+    static Color const yellow;
+    static Color const magenta;
+    static Color const cyan;
+    static Color const white;
+
+  private:
+    uint8_t red_;
+    uint8_t green_;
+    uint8_t blue_;
 };
 
 } /* namespace misc */

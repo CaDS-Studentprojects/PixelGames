@@ -20,9 +20,11 @@
 #include "output/IOutputHandler.hpp"
 #include "output/FileOutputHandler.hpp"
 #include "output/LedOutputHandler.hpp"
+#include "PixelGame.hpp"
 
 using namespace std;
 
+using namespace pixelgames;
 using namespace pixelgames::input;
 using namespace pixelgames::controller;
 using namespace pixelgames::output;
@@ -67,7 +69,7 @@ void game(string output_handler_type) {
 
   Input cur_action;
   bool isGameLost = false;
-  while ((cur_action = currect_action[1].load()) != Input::QUIT && !isGameLost) {
+  while ((cur_action = currect_action[1].load()) != Input::COUNT && !isGameLost) {
     printf("cur_action: %d\n", (int) cur_action);
     isGameLost = !game_controller.processInput(players.at(0), cur_action);
 
@@ -131,12 +133,36 @@ void test() {
   cout << playing_field.toString() << endl;
 }
 
+void test_registration(uint32_t numColumns, uint32_t numRows){
+  PixelGame pixel_game(numColumns, numRows, kRefreshRate, nullptr, nullptr);
+  PlayingField pf(numColumns, numRows);
+
+  cout << pixel_game.toString() << endl;
+
+  bool registrationSuccessful = false;
+  Player player = Player(-1, Pixel(), Input::COUNT, Color::black);
+
+  for(int i = 0; i < 7; i++){
+    tie(registrationSuccessful, player) = pixel_game.registerPlayer();
+
+    if(registrationSuccessful){
+      pf.updateField(player.getPositions()[0], player.getId());
+      cout << i << " - " << player.toString() << "Could not register!" << endl;
+    } else {
+      cout << i << " - " << "Could not register!" << endl;
+    }
+  }
+
+  cout << pf.prettyPrint() << endl;
+}
+
 int main() {
   //game("grpc");
-  game("");
+  //game("");
   //grpc_test();
 
   //test();
+  test_registration(10, 16);
 
   return 0;
 }

@@ -29,8 +29,8 @@ class TronGameController: public IGameController {
     bool processInput(Player const & player, Input const input) override;
 
   private:
-    PlayingField & playing_field;
-    vector<Player> & players;
+    PlayingField & playing_field_;
+    vector<Player> & players_;
 };
 
 } /* namespace controller */

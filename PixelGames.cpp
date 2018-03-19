@@ -8,7 +8,7 @@
 
 #include <iostream>
 #include <fstream>
-#include <map>
+#include <vector>
 #include <atomic>
 #include <chrono>
 #include <stdint.h>
@@ -30,7 +30,7 @@ using namespace pixelgames::controller;
 using namespace pixelgames::output;
 using namespace pixelgames::misc;
 
-map<int, atomic<Input>> currect_action;  // shared memory
+vector<atomic<Input>> currect_action;  // shared memory
 
 uint32_t const kNumRows = 16;
 uint32_t const kNumColumns = 10;
@@ -156,13 +156,44 @@ void test_registration(uint32_t numColumns, uint32_t numRows){
   cout << pf.prettyPrint() << endl;
 }
 
+void test_display_brightness(){
+  cout << "Pixel Games" << endl;
+  vector<vector<uint32_t>> white (kNumRows, vector<uint32_t>(kNumColumns, 0xFFFFFF));
+  vector<vector<uint32_t>> red   (kNumRows, vector<uint32_t>(kNumColumns, 0xFF0000));
+  vector<vector<uint32_t>> green (kNumRows, vector<uint32_t>(kNumColumns, 0x00FF00));
+  vector<vector<uint32_t>> blue  (kNumRows, vector<uint32_t>(kNumColumns, 0x0000FF));
+
+  LedOutputHandler output_handler(grpc::CreateChannel("raspberryRFID:50051", grpc::InsecureChannelCredentials()),
+    kNumRows, kNumColumns);
+
+  while(true){
+    cout << "> white" << endl;
+    output_handler << white;
+    this_thread::sleep_for(std::chrono::seconds(5));
+
+    cout << "> red" << endl;
+    output_handler << red;
+    this_thread::sleep_for(std::chrono::seconds(5));
+
+    cout << "> green" << endl;
+    output_handler << green;
+    this_thread::sleep_for(std::chrono::seconds(5));
+
+    cout << "> blue" << endl;
+    output_handler << blue;
+    this_thread::sleep_for(std::chrono::seconds(5));
+  }
+
+}
+
 int main() {
   //game("grpc");
   //game("");
   //grpc_test();
 
   //test();
-  test_registration(10, 16);
+  //test_registration(10, 16);
+  test_display_brightness();
 
   return 0;
 }

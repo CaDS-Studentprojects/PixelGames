@@ -14,7 +14,6 @@
 //#include <ncurses.h>
 
 #include "Input.hpp"
-#include "../misc/Player.hpp"
 
 using namespace std;
 
